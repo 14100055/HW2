@@ -15,6 +15,10 @@ a {
   color: maroon;
   text-decoration: underline;
   font-weight: bold;
+  
+  &:hover {
+    color: #90bbff;
+  }
 }
 h1 {
   color: maroon;
@@ -43,6 +47,9 @@ table#movies th {
   border: 2px solid white;
   font-weight: bold;
   background-color: wheat;
+}
+table#movies th.hilite {
+  background: rosybrown;
 }
 table#movies th, table#movies td {
   padding: 4px;
