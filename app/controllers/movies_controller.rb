@@ -11,7 +11,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-    # @nice_link = "a.nice-link"
     sort_key = params[:sort_by]
     @movies = Movie.order(sort_key)
   end
