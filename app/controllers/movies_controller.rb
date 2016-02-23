@@ -16,22 +16,21 @@ class MoviesController < ApplicationController
     
     @all_ratings = Movie.all_ratings
     @movies = Movie.all
-    @ratings = @all_ratings
-    
-    if !(params[:ratings].nil?)
-      @ratings = params[:ratings].keys
-      @movies = Movie.where(rating: @ratings)
-    end
-    
-    if !(params[:sort_by].nil?)
+    @checked_ratings = @all_ratings
+
+    if params.has_key?(:sort_by)
       @movies = @movies.order(params[:sort_by])
       if params[:sort_by] == "title"
-        @tlite = "hilite"
+          @tlite = "hilite"
       elsif params[:sort_by] == "release_date"
         @rlite = "hilite"
       end
     end
-  
+
+    if params.has_key?(:ratings)
+      @checked_ratings = params[:ratings].keys
+      @movies = Movie.where(:rating => @checked_ratings)
+    end
   end
  
   def new
@@ -59,6 +58,25 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
+    redirect_to movies_path
+  end
+
+  def edits
+  end
+  
+  def updates
+    updated_movie = params[:movie]
+    puts updated_movie[:title]
+    if @movie = Movie.find_by_title(updated_movie[:title])
+      if updated_movie[:title] != "" && updated_movie[:rating] != "" && updated_movie[:release_date] != ""
+        @movie.update_attributes!(movie_params)
+        flash[:notice] = "#{@movie.title} was successfully updated."
+      else
+        flash[:notice] = "#{@movie.title} was not updated: all fields not entered."
+      end
+    else
+      flash[:notice] = "#{updated_movie[:title]} was not found!"
+    end
     redirect_to movies_path
   end
 
