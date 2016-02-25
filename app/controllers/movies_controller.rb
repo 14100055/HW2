@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
     if params.has_key?(:sort_by)
       @movies = @movies.order(params[:sort_by])
       if params[:sort_by] == "title"
-          @tlite = "hilite"
+        @tlite = "hilite"
       elsif params[:sort_by] == "release_date"
         @rlite = "hilite"
       end
@@ -31,6 +31,7 @@ class MoviesController < ApplicationController
       @checked_ratings = params[:ratings].keys
       @movies = Movie.where(:rating => @checked_ratings)
     end
+
   end
  
   def new
@@ -66,8 +67,7 @@ class MoviesController < ApplicationController
   
   def updates
     updated_movie = params[:movie]
-    puts updated_movie[:title]
-    if @movie = Movie.find_by_title(updated_movie[:title])
+    if @movie = Movie.find_by_title(updated_movie[:title_check])
       if updated_movie[:title] != "" && updated_movie[:rating] != "" && updated_movie[:release_date] != ""
         @movie.update_attributes!(movie_params)
         flash[:notice] = "#{@movie.title} was successfully updated."
@@ -75,9 +75,33 @@ class MoviesController < ApplicationController
         flash[:notice] = "#{@movie.title} was not updated: all fields not entered."
       end
     else
-      flash[:notice] = "#{updated_movie[:title]} was not found!"
+      flash[:notice] = "#{updated_movie[:title_check]} was not found!"
     end
     redirect_to movies_path
+  end
+
+  def delete_title
+    if params.has_key?(:movie)
+      deleted_movie = params[:movie]
+      if @movie = Movie.find_by_title(deleted_movie[:title])
+        @movie.destroy
+        flash[:notice] = "#{deleted_movie[:title]} was deleted!"
+      else
+        flash[:notice] = "#{deleted_movie[:title]} was not deleted!"
+      end
+      redirect_to movies_path
+    end
+  end
+
+  def delete_rating
+    if params.has_key?(:movie)
+      deleted_movie = params[:movie]
+      Movie.where(:rating => deleted_movie[:rating]).each do |movie|
+        movie.destroy
+      end
+      flash[:notice] = "Movies with ratings \"#{deleted_movie[:rating]}\" were deleted!"
+      redirect_to movies_path
+    end
   end
 
 end

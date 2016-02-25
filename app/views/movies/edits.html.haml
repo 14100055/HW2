@@ -4,6 +4,9 @@
 
 = form_tag updates_movies_path, :method => :put do
 
+  = label :movie, :title_check, 'Movie to Update'
+  = text_field :movie, 'title_check'
+
   = label :movie, :title, 'Title'
   = text_field :movie, 'title'
 

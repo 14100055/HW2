@@ -16,10 +16,18 @@
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
+<br/>
+
 = link_to 'Add new movie', new_movie_path
+|
+= link_to 'Update movie', edits_movies_path
+|
+= link_to 'Delete movie (by title)', delete_title_movies_path
+|
+= link_to 'Delete movie (by rating)', delete_rating_movies_path
 
-= link_to 'Update a movie', edits_movies_path
-
+<br/>
+<br/>
 
 = form_tag movies_path, :method => :get do
   Include:

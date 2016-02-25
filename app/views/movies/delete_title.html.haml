@@ -1,0 +1,8 @@
+%h1 Delete by Title
+
+= form_tag delete_title_movies_path, :method => :get do
+  
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title'
+  
+  = submit_tag 'Delete Movies'

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     collection do
       get 'edits'
       put 'updates'
+      get 'delete_title'
+      get 'delete_rating'
     end
   end
   
