@@ -18,18 +18,30 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @checked_ratings = @all_ratings
 
-    if params.has_key?(:sort_by)
+    if params[:sort_by].nil?
+      params[:sort_by] = session[:sort_by]
+    else
+      session[:sort_by] = params[:sort_by]
+    end
+    
+    if params[:commit].nil?
+      params[:ratings] = session[:ratings]
+    else
+      session[:ratings] = params[:ratings]
+    end
+
+    if !params[:ratings].nil?
+      @checked_ratings = params[:ratings].keys
+      @movies = @movies.where(:rating => params[:ratings].keys)
+    end
+
+    if !params[:sort_by].nil?
       @movies = @movies.order(params[:sort_by])
       if params[:sort_by] == "title"
         @tlite = "hilite"
       elsif params[:sort_by] == "release_date"
         @rlite = "hilite"
       end
-    end
-
-    if params.has_key?(:ratings)
-      @checked_ratings = params[:ratings].keys
-      @movies = Movie.where(:rating => @checked_ratings)
     end
 
   end
