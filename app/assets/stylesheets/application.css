@@ -59,10 +59,18 @@ a:hover {
 
 tbody:hover td {
   color: transparent;
-  text-shadow: 0 0 3px #aaa;
+  text-shadow: 0 0 5px #aaa;
+}
+tbody:hover a {
+  color: transparent;
+  text-shadow: 0 0 5px #aaa;
 }
 
 tbody:hover tr:hover td {
+  color: #444;
+  text-shadow: 0 1px 0 #fff;
+}
+tbody:hover tr:hover a {
   color: #444;
   text-shadow: 0 1px 0 #fff;
 }
