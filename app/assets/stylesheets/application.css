@@ -55,3 +55,14 @@ a:hover {
   font-weight: bold;
   color: #3fc1ff;
 }
+
+
+tbody:hover td {
+  color: transparent;
+  text-shadow: 0 0 3px #aaa;
+}
+
+tbody:hover tr:hover td {
+  color: #444;
+  text-shadow: 0 1px 0 #fff;
+}
